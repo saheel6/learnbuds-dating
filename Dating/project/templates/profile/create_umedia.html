@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% block content %}
+<script>
+    function readURL(input, previewId, labelId) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById(previewId).src = e.target.result;
+                document.getElementById(previewId).style.display = 'block';
+                document.getElementById(labelId).style.display = 'block';
+            }
+            reader.readAsDataURL(input.files[0]);
+        } else {
+            document.getElementById(previewId).style.display = 'none';
+            document.getElementById(labelId).style.display = 'none';
+        }
+    }
+
+    function readReelURL(input) {
+        if (input.files && input.files[0]) {
+            document.getElementById('short_reel_preview').innerText = input.files[0].name;
+            document.getElementById('short_reel_preview').style.display = 'block';
+        } else {
+            document.getElementById('short_reel_preview').style.display = 'none';
+        }
+    }
+</script>
+
+<h1>User Media Form</h1>
+<div class="container-fluid my-5">
+    <div class="row m-3">
+        <div class="col-md-6">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Save</button>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-4">
+                    <img id="additional_image1_preview" src="#" alt="Additional Image 1 Preview" style="display:none; max-width: 200px; max-height: 200px;" />
+                    <p id="additional_image1_label" style="display:none;">Additional Image 1</p>
+                </div>
+                <div class="col-md-4">
+                    <img id="additional_image2_preview" src="#" alt="Additional Image 2 Preview" style="display:none; max-width: 200px; max-height: 200px;" />
+                    <p id="additional_image2_label" style="display:none;">Additional Image 2</p>
+                </div>
+                <div class="col-md-4">
+                    <img id="additional_image3_preview" src="#" alt="Additional Image 3 Preview" style="display:none; max-width: 200px; max-height: 200px;" />
+                    <p id="additional_image3_label" style="display:none;">Additional Image 3</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <img id="additional_image4_preview" src="#" alt="Additional Image 4 Preview" style="display:none; max-width: 200px; max-height: 200px;" />
+                    <p id="additional_image4_label" style="display:none;">Additional Image 4</p>
+                </div>
+                <div class="col-md-4">
+                    <img id="additional_image5_preview" src="#" alt="Additional Image 5 Preview" style="display:none; max-width: 200px; max-height: 200px;" />
+                    <p id="additional_image5_label" style="display:none;">Additional Image 5</p>
+                </div>
+                <div class="col-md-4">
+                    <p id="short_reel_preview" style="display:none;"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('id_additional_image1').addEventListener('change', function() {
+        readURL(this, 'additional_image1_preview', 'additional_image1_label');
+    });
+    document.getElementById('id_additional_image2').addEventListener('change', function() {
+        readURL(this, 'additional_image2_preview', 'additional_image2_label');
+    });
+    document.getElementById('id_additional_image3').addEventListener('change', function() {
+        readURL(this, 'additional_image3_preview', 'additional_image3_label');
+    });
+    document.getElementById('id_additional_image4').addEventListener('change', function() {
+        readURL(this, 'additional_image4_preview', 'additional_image4_label');
+    });
+    document.getElementById('id_additional_image5').addEventListener('change', function() {
+        readURL(this, 'additional_image5_preview', 'additional_image5_label');
+    });
+
+    document.getElementById('id_short_reel').addEventListener('change', function() {
+        readReelURL(this);
+    });
+</script>
+
+{% endblock content %}

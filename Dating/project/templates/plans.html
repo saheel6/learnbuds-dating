@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<style>
+    :root {
+        --primary-color: #ff6b6b;
+        --secondary-color: #4ecdc4;
+    }
+    .plans-section {
+        background: linear-gradient(135deg, #1a1a1a, #2c2c2c);
+        color: #ffffff;
+        padding: 80px 0;
+    }
+    .section-title {
+        font-size: 2.5rem;
+        font-weight: bold;
+        margin-bottom: 30px;
+        position: relative;
+        padding-bottom: 15px;
+    }
+    .section-title::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 3px;
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    }
+    .plan-card {
+        background-color: rgba(255, 255, 255, 0.05);
+        border-radius: 15px;
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        height: 100%;
+    }
+    .plan-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    }
+    .plan-header {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        padding: 30px;
+        text-align: center;
+    }
+    .plan-title {
+        font-size: 24px;
+        font-weight: bold;
+        margin: 10px 0 0;
+    }
+    .plan-content {
+        padding: 30px;
+    }
+    .plan-feature {
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+    }
+    .plan-feature i {
+        color: var(--primary-color);
+        margin-right: 10px;
+    }
+    .btn-join {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        border: none;
+        border-radius: 50px;
+        color: white;
+        font-weight: bold;
+        padding: 12px 30px;
+        text-transform: uppercase;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .btn-join:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+    }
+</style>
+
+<div class="plans-section">
+    <div class="container">
+        <h1 class="text-center section-title mb-5">Subscription Tiers</h1>
+        <p class="text-center mb-5">Upgrade to Plus, Gold, or Platinum for an enhanced Tinder experience.</p>
+        
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="plan-card">
+                    <div class="plan-header">
+                        <img src="{% static 'images/dlogo1.png' %}" alt="Plus" height="50">
+                        <h3 class="plan-title">Plus</h3>
+                    </div>
+                    <div class="plan-content">
+                        <div class="plan-feature"><i class="bi bi-check-circle-fill"></i> Unlimited Likes</div>
+                        <div class="plan-feature"><i class="bi bi-check-circle-fill"></i> Unlimited Rewinds</div>
+                        <div class="plan-feature"><i class="bi bi-check-circle-fill"></i> Passport™ To Any Location</div>
+                        <div class="plan-feature"><i class="bi bi-check-circle-fill"></i> Hide Advertisements</div>
+                        <div class="plan-feature"><i class="bi bi-check-circle-fill"></i> Go Incognito</div>
+                    </div>
+                    <div class="text-center mt-4 mb-4">
+                        <button class="btn btn-join">Join Now</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="plan-card">
+                    <div class="plan-header">
+                        <img src="{% static 'images/dlogo1.png' %}" alt="Gold" height="50">
+                        <h3 class="plan-title">Gold</h3>
+                    </div>
+                    <div class="plan-content">
+                        <div class="plan-feature"><i class="bi bi-check-circle-fill"></i> See Who Likes You</div>
+                        <div class="plan-feature"><i class="bi bi-check-circle-fill"></i> Weekly Super Likes</div>
+                        <div class="plan-feature"><i class="bi bi-check-circle-fill"></i> New Top Picks every day</div>
+                        <div class="plan-feature"><i class="bi bi-check-circle-fill"></i> 1 Free Boost a month</div>
+                        <div class="plan-feature"><i class="bi bi-check-circle-fill"></i> Everything from Plus</div>
+                    </div>
+                    <div class="text-center mt-4 mb-4">
+                        <button class="btn btn-join">Join Now</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="plan-card">
+                    <div class="plan-header">
+                        <img src="{% static 'images/dlogo1.png' %}" alt="Platinum" height="50">
+                        <h3 class="plan-title">Platinum</h3>
+                    </div>
+                    <div class="plan-content">
+                        <div class="plan-feature"><i class="bi bi-check-circle-fill"></i> Message before Matching</div>
+                        <div class="plan-feature"><i class="bi bi-check-circle-fill"></i> Prioritized Likes</div>
+                        <div class="plan-feature"><i class="bi bi-check-circle-fill"></i> See Likes sent in last 7 days</div>
+                        <div class="plan-feature"><i class="bi bi-check-circle-fill"></i> Everything from Gold</div>
+                    </div>
+                    <div class="text-center mt-4 mb-4">
+                        <button class="btn btn-join">Join Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

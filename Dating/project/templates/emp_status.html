@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<script>
+    function toggleForm(formType) {
+        document.getElementById('employee_form').style.display = formType === 'employee' ? 'block' : 'none';
+        document.getElementById('jobseeker_form').style.display = formType === 'jobseeker' ? 'block' : 'none';
+    }
+</script>
+<div class="container vh-100 pt-5">
+<div class="text-center">
+    <h1 class="my-3">Employment Status</h1>
+    <div class="btn-container ">
+        <button class="btn btn-primary" onclick="toggleForm('employee')">Employee</button>
+        <button class="btn btn-secondary" onclick="toggleForm('jobseeker')">Jobseeker</button>
+    </div>
+</div>
+
+<div class="form-container container mt-4">
+    <div class="row align-items-center justify-content-center">
+    <div class="col-md-6 ">
+    <form method="post" id="employee_form" style="display: none;">
+        {% csrf_token %}
+        {{ employee_form.as_p }}
+        <button type="submit" class="btn btn-success w-100" name="employee_submit">Save</button>
+    </form>
+
+    <form method="post" id="jobseeker_form" style="display: none;">
+        {% csrf_token %}
+        {{ jobseeker_form.as_p }}
+        <button type="submit" class="btn btn-success w-100" name="jobseeker_submit">Save</button>
+    </form>
+</div>
+</div>
+</div>
+</div>
+{% endblock content %}

@@ -1,0 +1,197 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<style>
+  .main-container {
+    display: flex;
+    height: 100vh;
+  }
+
+  .sidebar {
+    width: 450px;
+    background-color: #f8f9fa;
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    transition: transform 0.3s ease;
+  }
+
+  .sidebar.collapsed {
+    display: none;
+  }
+
+  .main-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    transition: width 0.3s ease;
+  }
+
+  .main-content-wrapper.full-width {
+    width: 100%;
+  }
+
+  .main-content {
+    flex-grow: 1;
+    padding: 0;
+    overflow-y: auto;
+    position: relative;
+  }
+
+  .content-body {
+    padding: 20px;
+  }
+
+  .clickable-text {
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+
+  .clickable-text.active {
+    color: #ff5733;
+  }
+
+  .messages {
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    transition: 0.2s box-shadow;
+    cursor: pointer;
+  }
+
+  .messages .avatar img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .messages .user {
+    padding: 0 10px;
+    font-weight: 500;
+    font-size: 18px;
+  }
+
+  .messages .friend {
+    padding: 0 10px;
+    font-weight: 400;
+    font-size: 14px;
+  }
+
+  .messages .text {
+    flex: 1;
+    padding: 0 10px;
+    font-weight: 300;
+    font-size: 15px;
+    opacity: 0.8;
+  }
+
+  .messages .actions .btn {
+    padding: 3px 7px;
+  }
+
+  .messages:hover {
+    box-shadow: 0 0 15px 0 rgba(43, 78, 78, 0.1);
+    border-right: 5px solid #fd5068;
+  }
+
+  .toggler-button {
+    z-index: 1000;
+  }
+
+  @media (max-width: 768px) {
+    .sidebar {
+      width: 200px;
+    }
+  }
+</style>
+
+<div class="container-fluid main-container py-2">
+  <div class="sidebar" id="sidebar">
+    <div class="offcanvas-header mx-auto d-flex justify-content-between">
+      <h5 class="offcanvas-title" id="offcanvasScrollingLabel"></h5>
+    </div>
+    <div class="offcanvas-body">
+      <div class="menu">
+        <div class="d-flex">
+          <p id="text1" class="clickable-text me-2 fw-bold active" onclick="toggleContent('matches')">Messages</p>
+          <p id="text2" class="clickable-text fw-bold ms-3" onclick="toggleContent('messages')">Friends</p>
+        </div>
+      </div>
+      <div id="matches_content" class="content-section" style="display: block;">
+        <div class="messages">
+          <div class="avatar">
+            <img src="{% static 'images/lad1.jpg' %}" alt="" />
+          </div>
+          <div class="message">
+            <div class="user">hello</div>
+            <div class="text">liked your profile</div>
+          </div>
+        </div>
+      </div>
+      <div id="messages_content" class="content-section" style="display: none;">
+        {% for friend in friends %}
+        {% if friend.from_user == user %}
+        <div class="messages">
+          <div class="avatar">
+            <img src="{{ friend.to_user.personalinfo.profile_pic.url }}" alt="" />
+          </div>
+          <div class="message">
+            <div class="friend">{{ friend.to_user.personalinfo.fullname }}</div>
+            <div class="actions"></div>
+          </div>
+        </div>
+        {% else %}
+        <div class="messages">
+          <div class="avatar">
+            <img src="{{ friend.from_user.personalinfo.profile_pic.url }}" alt="" />
+          </div>
+          <div class="message">
+            <div class="friend">{{ friend.from_user.personalinfo.fullname }}</div>
+            <div class="actions"></div>
+          </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  <div class="main-content-wrapper container-fluid" id="main-content-wrapper">
+    <div class="main-content">
+      <a class="toggler-button position-absolute top-0 start-0" type="button" onclick="toggleSidebar()">
+        <i class="bi bi-list" style="font-size: 1.5em"></i>
+      </a>
+      <div class="content-body">
+        <h1>main content</h1>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function toggleSidebar() {
+    const sidebar = document.getElementById("sidebar");
+    const mainContentWrapper = document.getElementById("main-content-wrapper");
+    sidebar.classList.toggle("collapsed");
+    mainContentWrapper.classList.toggle("full-width");
+  }
+
+  document.addEventListener("DOMContentLoaded", function() {
+    const clickableTexts = document.querySelectorAll(".clickable-text");
+
+    clickableTexts.forEach(text => {
+      text.addEventListener("click", function() {
+        clickableTexts.forEach(t => t.classList.remove("active"));
+        this.classList.add("active");
+      });
+    });
+  });
+
+  function toggleContent(contentType) {
+    document.getElementById('matches_content').style.display = contentType === 'matches' ? 'block' : 'none';
+    document.getElementById('messages_content').style.display = contentType === 'messages' ? 'block' : 'none';
+    document.getElementById('text1').classList.toggle('active', contentType === 'matches');
+    document.getElementById('text2').classList.toggle('active', contentType === 'messages');
+  }
+</script>
+{% endblock %}

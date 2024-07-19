@@ -1,0 +1,356 @@
+{% extends "base.html" %} {% load static %} {% block content %}
+<style>
+  * {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+  }
+  body {
+    background-color: #f5f7fa;
+    font-family: "Roboto", sans-serif;
+    margin: 0;
+  }
+  .side {
+    height: 100%;
+    min-height: 100vh;
+    background-color: #fff;
+    border-right: 1px solid #e1e1e1;
+    padding: 0;
+  }
+  .content {
+    width: 100%;
+    display: flex;
+    padding: 20px 0;
+    align-items: center;
+    flex-direction: column;
+  }
+  .header {
+    background: linear-gradient(262deg, #ff7854, #fd267d);
+    width: 100%;
+    height: 80px;
+    box-shadow: 0 1px 8px 0 rgba(0, 20, 20, 0.2);
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+  }
+  .header .avatar img {
+    width: 40px;
+    height: 40px;
+    border-radius: 40px;
+    border: 2px solid #fff;
+    box-shadow: 0 1px 8px 0 rgba(0, 20, 20, 0.2);
+  }
+  .header .title {
+    padding: 0 10px;
+    color: #fff;
+    font-size: 23px;
+  }
+  .menu ul {
+    display: flex;
+    padding: 0 20px;
+  }
+  .menu ul li {
+    list-style: none;
+    margin: 0 10px;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.5px;
+  }
+  .menu .active {
+    border-bottom: 3px solid #fd5068;
+    padding-bottom: 2px;
+  }
+  .messages {
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    transition: 0.2s box-shadow;
+  }
+  .messages .avatar img {
+    width: 70px;
+    height: 70px;
+    border-radius: 70px;
+  }
+  .messages .user {
+    padding: 0 10px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    font-size: 18px;
+  }
+  .messages .text {
+    width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 10px;
+    font-weight: 300;
+    font-size: 15px;
+    opacity: 0.8;
+  }
+  .messages:hover {
+    box-shadow: 0 0 15px 0 rgba(43, 78, 78, 0.1);
+    border-right: 5px solid #fd5068;
+  }
+  .card {
+    position: relative;
+    height: 450px;
+  }
+  .card .user {
+    width: 380px;
+    height: 450px;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 1px 10px 0 rgba(0, 20, 20, 0.5);
+  }
+  .card .user .profile {
+    position: absolute;
+    bottom: 0px;
+    left: 20px;
+  }
+  .card .user .name {
+    color: #fff;
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-shadow: 1px 1px 5px #444;
+  }
+  .card .user .name span {
+    font-size: 26px;
+  }
+  .card .local {
+    display: flex;
+    align-items: center;
+    padding: 0 0 20px 0;
+  }
+  .card .local i {
+    margin: 5px 0;
+    color: #fff;
+  }
+  .card .local span {
+    color: #fff;
+    padding: 0 10px;
+    text-shadow: 1px 1px 5px #444;
+  }
+  .buttons {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+  }
+  .buttons .no i {
+    color: #fd2e79;
+    font-size: 33px;
+  }
+  .buttons .star i {
+    color: #2bb1ff;
+    font-size: 22px;
+  }
+  .buttons .heart i {
+    color: #11e298;
+    font-size: 32px;
+  }
+  .buttons .no,
+  .buttons .star,
+  .buttons .heart {
+    background-color: #fff;
+    width: 70px;
+    height: 70px;
+    box-shadow: 0 1px 10px 0 rgba(0, 20, 20, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 70px;
+    margin: 4px;
+    transition: 0.2s transform;
+  }
+  .buttons .no:hover,
+  .buttons .star:hover,
+  .buttons .heart:hover {
+    transform: scale(1.1);
+  }
+  .buttons .star {
+    width: 60px;
+    height: 60px;
+  }
+  .carousel-item img {
+    max-width: 300px;
+  }
+  .gradient-box {
+    height: 170px;
+    width: 130px;
+    background: linear-gradient(262deg, #ff7854, #fd267d);
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+</style>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-4 side pe-md-0 ps-md-0">
+      <div class="header">
+        <div class="avatar">
+          <img src="https://randomuser.me/api/portraits/women/64.jpg" alt="" />
+        </div>
+        <div class="title">mary com</div>
+      </div>
+      <div class="container">
+        <div class="menu">
+          <div class="d-flex">
+            <p id="text1" class="clickable-text me-2 fs-5 fw-bold active">
+              Matches
+            </p>
+            <p id="text2" class="clickable-text fs-5 fw-bold">Messages</p>
+          </div>
+        </div>
+        <div class="content-area" id="content-area">
+          <div class="gradient-box"></div>
+          <p class="fs-4 fw-bold">Start Matching</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8 content">
+      <div
+        id="carouselExampleIndicators"
+        class="carousel slide"
+        data-bs-ride="carousel"
+      >
+        <div class="carousel-indicators">
+          <button
+            type="button"
+            data-bs-target="#carouselExampleIndicators"
+            data-bs-slide-to="0"
+            class="active"
+            aria-current="true"
+            aria-label="Slide 1"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#carouselExampleIndicators"
+            data-bs-slide-to="1"
+            aria-label="Slide 2"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#carouselExampleIndicators"
+            data-bs-slide-to="2"
+            aria-label="Slide 3"
+          ></button>
+        </div>
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="{% static "images/lad1.jpg" %}" class="d-block w-100"
+            alt="Image 1">
+          </div>
+          <div class="carousel-item">
+            <img src="{% static "images/lad1.jpg" %}" class="d-block w-100"
+            alt="Image 2">
+          </div>
+          <div class="carousel-item">
+            <img src="{% static "images/lad1.jpg" %}" class="d-block w-100"
+            alt="Image 3">
+          </div>
+        </div>
+        <button
+          class="carousel-control-prev"
+          type="button"
+          data-bs-target="#carouselExampleIndicators"
+          data-bs-slide="prev"
+        >
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button
+          class="carousel-control-next"
+          type="button"
+          data-bs-target="#carouselExampleIndicators"
+          data-bs-slide="next"
+        >
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+      <div class="buttons">
+        <div class="no">
+          <i class="bi bi-x-circle"></i>
+        </div>
+        <div class="star">
+          <i class="bi bi-star-fill"></i>
+        </div>
+        <div class="heart">
+          <i class="bi bi-heart-fill"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const texts = document.querySelectorAll(".clickable-text");
+
+    texts.forEach((text) => {
+      text.addEventListener("click", function () {
+        texts.forEach((t) => t.classList.remove("active"));
+        this.classList.add("active");
+
+        const contentArea = document.getElementById("content-area");
+        if (this.id === "text1") {
+          contentArea.innerHTML = `
+                  <div class="gradient-box"></div>
+                  <p class="fs-4 fw-bold">Start Matching</p>
+                  <div class="container text-center">
+                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eum assumenda obcaecati fugit corrupti. Nostrum est quisquam ipsa.</p>
+                  </div>
+                `;
+        } else if (this.id === "text2") {
+          contentArea.innerHTML = `
+                  <div class="messages">
+                    <div class="avatar">
+                        <img src="https://randomuser.me/api/portraits/women/38.jpg" alt="" />
+                    </div>
+                    <div class="message">
+                        <div class="user">Caroline</div>
+                        <div class="text">Lorem ipsum dolor sit amet consectetur adipisicing</div>
+                    </div>
+                </div>
+                <div class="messages">
+                    <div class="avatar">
+                        <img src="https://randomuser.me/api/portraits/women/39.jpg" alt="" />
+                    </div>
+                    <div class="message">
+                        <div class="user">Caroline</div>
+                        <div class="text">Lorem ipsum dolor sit amet consectetur adipisicing</div>
+                    </div>
+                </div>
+                <div class="messages">
+                    <div class="avatar">
+                        <img src="https://randomuser.me/api/portraits/women/40.jpg" alt="" />
+                    </div>
+                    <div class="message">
+                        <div class="user">Caroline</div>
+                        <div class="text">Lorem ipsum dolor sit amet consectetur adipisicing</div>
+                    </div>
+                </div>
+                <div class="messages">
+                    <div class="avatar">
+                        <img src="https://randomuser.me/api/portraits/women/41.jpg" alt="" />
+                    </div>
+                    <div class="message">
+                        <div class="user">Caroline</div>
+                        <div class="text">Lorem ipsum dolor sit amet consectetur adipisicing</div>
+                    </div>
+                </div>
+                <div class="messages">
+                    <div class="avatar">
+                        <img src="https://randomuser.me/api/portraits/women/42.jpg" alt="" />
+                    </div>
+                    <div class="message">
+                        <div class="user">Caroline</div>
+                        <div class="text">Lorem ipsum dolor sit amet consectetur adipisicing</div>
+                    </div>
+                `;
+        }
+      });
+    });
+  });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+{% endblock content %}

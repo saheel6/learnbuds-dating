@@ -1,0 +1,391 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+  .main-container {
+    display: flex;
+    height: 100vh;
+  }
+
+  .sidebar {
+    width: 350px;
+    background-color: #f8f9fa;
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    overflow-y: auto;
+  }
+
+  .sidebar.collapsed {
+    display: none;
+  }
+
+  .main-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    transition: width 0.3s ease;
+    width: 100%;
+  }
+
+  .main-content-wrapper.full-width {
+    width: 100%;
+  }
+
+  .main-content {
+    flex-grow: 1;
+    padding: 0;
+    overflow-y: auto;
+    position: relative;
+  }
+
+  .content-body {
+    padding-bottom: 60px;
+  }
+  .clickable-text {
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  
+  .clickable-text.active {
+    color: #ff5733; /* Change this to the color you want for the active state */
+  }
+  .messages {
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    transition: 0.2s box-shadow;
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .messages .avatar img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .messages .user {
+    padding: 0 10px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    font-size: 18px;
+  }
+  .messages .friend{
+    padding: 0 10px;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    font-size: 14px;
+  }
+  .messages .text {
+    flex: 1;
+    padding: 0 10px;
+    font-weight: 300;
+    font-size: 15px;
+    opacity: 0.8;
+  }
+  .messages .actions {
+    flex:1;
+    padding:0px 10px;
+    font-weight: 300;
+  }
+  .messages .actions .btn{
+    padding:3px 7px;
+    margin-top:0px;
+  }
+  .messages:hover {
+    box-shadow: 0 0 15px 0 rgba(43, 78, 78, 0.1);
+    border-right: 5px solid #fd5068;
+  }
+
+  .gradient-box {
+    height: 170px;
+    width: 130px;
+    background: linear-gradient(262deg, #ff7854, #fd267d);
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+
+  .card {
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .card .card-img-overlay {
+    padding: 1rem;
+    color: #fff;
+  }
+
+  .card .card-img {
+    height: 280px;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .card .profile-details {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.5);
+  }
+
+  .card .profile-details h5,
+  .card .profile-details p {
+    margin-bottom: 0;
+    color: #fff;
+  }
+
+  .toggler-button {
+    z-index: 1000;
+    /* Ensure the button appears on top */
+  }
+
+  .card-img {
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+  @media (max-width: 768px) {
+    .sidebar {
+      width: 250px;
+    }
+
+    .main-content-wrapper {
+      padding-left: 0;
+    }
+
+    .card .card-img {
+      height: 200px;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .sidebar {
+      width: 200px;
+    }
+
+    .card .card-img {
+      height: 150px;
+    }
+  }
+</style>
+
+<div class="container-fluid main-container py-2">
+  <div class="sidebar" id="sidebar">
+    <div class="offcanvas-header mx-auto d-flex justify-content-between">
+      <h5 class="offcanvas-title" id="offcanvasScrollingLabel"></h5>
+    </div>
+    <div class="offcanvas-body">
+      <div class="menu">
+          <div class="d-flex">
+              <p id="text1" class="clickable-text me-2 fw-bold active" onclick="toggleContent('matches')">Matches</p>
+              <p id="text2" class="clickable-text fw-bold ms-3" onclick="toggleContent('messages')">Friend requests</p>
+          </div>
+      </div>
+      <div id="matches_content" class="content-section" style="display: block;">
+        {% if user.liked_by_profiles.all %}
+        {% for liker in user.liked_by_profiles.all %}
+        <div class="messages" data-bs-target="#userModal{{ liker.id }}" data-bs-toggle="modal">
+          <div class="avatar">
+              <img src="{{liker.personalinfo.profile_pic.url}}" alt="" />
+          </div>
+          <div class="message">
+              <div class="user">{{ liker.personalinfo.fullname}}</div>
+              <div class="text">liked your profile</div>
+          </div>
+
+      </div>
+      {% endfor %}
+      {% else %}
+          <p>No one has liked your profile yet.</p>
+        {% endif %}  
+          
+              
+      </div>
+      <div id="messages_content" class="content-section" style="display: none;">
+        {% if friend_requests %}
+        {% for friends in friend_requests %}
+        <div class="messages" data-bs-target="#userModal{{ friends.from_user.id }}" data-bs-toggle="modal">
+          <div class="avatar">
+              <img src="{{ friends.from_user.personalinfo.profile_pic.url }}" alt="" />
+          </div>
+          <div class="message">
+              <div class="friend"><p>{{ friends.from_user.personalinfo.fullname}}<p></div>
+              
+                <div class="actions">
+                  <a href="{% url 'accept_friend_request' friends.id %}" class="btn btn-primary me-3" ><i class="fa-solid fa-user-check" ></i></a>
+                  <a href="{% url 'reject_friend_request' friends.id %}" class="btn btn-danger"><i class="fa-solid fa-user-xmark"></i></a>
+              </div>
+              
+          </div>
+      </div>
+      {% endfor %}
+      {% else %}
+      <p>explore and make connections</p>
+       {% endif %} 
+      </div>
+  </div>
+  </div>
+  <div class="main-content-wrapper container-fluid" id="main-content-wrapper">
+    <div class="main-content">
+      <a class="toggler-button position-absolute top-0 start-0" type="button" onclick="toggleSidebar()">
+        <i class="bi bi-list" style="font-size: 1.5em"></i>
+      </a>
+      <div class="content-body p-4">
+        <h2 class="my-2 bg-dark text-light text-center p-2">Profiles located near your current location</h2>
+        <div class="row">
+          {% for user in location_filtered_users %}
+          <div class="col-md-4">
+            <div class="card" data-bs-toggle="modal" data-bs-target="#userModal{{ user.id }}">
+              <div class="card-img" style="background-image: url('{% if user.personalinfo.profile_pic %}{{ user.personalinfo.profile_pic.url }}{% else %}https://via.placeholder.com/800x600{% endif %}');">
+                <div class="card-img-overlay">
+                  <div class="profile-details">
+                    <h5 class="card-title">{{ user.personalinfo.fullname }} {{ user.personalinfo.age }}</h5>
+                    <p>{{ user.personalinfo.district }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Modal -->
+          <div class="modal fade" id="userModal{{ user.id }}" tabindex="-1" aria-labelledby="userModalLabel{{ user.id }}" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4>{{user.personalinfo.fullname}} &nbsp; {{user.personalinfo.age}}</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body px-2">
+                  <div class="container d-flex flex-column align-items-center justify-content-center">
+                    {% if user.personalinfo.profile_pic.url %}
+                    <img src="{{ user.personalinfo.profile_pic.url }}" alt="img" height="135px" width="100px" style="border-radius: 10px;">
+                    {% endif %}
+                    <p>{{user.personalinfo.bio}}</p>
+                  </div>
+                  <p><i class="bi bi-person me-2 fs-5"></i>{{user.personalinfo.gender}}</p>
+                  <p><i class="bi bi-geo-alt me-2 fs-5"></i>{{user.personalinfo.district}} , {{user.personalinfo.state}}</p>
+                  <p> <span class="fw-bold">Weight :</span> {{user.additionalinfo.weight}} kg <span class="ms-4"><span class="fw-bold"> height : </span>{{user.additionalinfo.height}} cm</span></p>
+                  <hr>
+                  <p class="fw-bold">Hobbies:</p>
+                  <div class="container d-flex ">
+                   {% for h  in user.additionalinfo.get_hobbies_list %}
+                    <p class="rounded-pill border border-3 px-2 py-1 me-2">{{h}} &nbsp;</p>
+                   {% endfor %}
+                  </div>
+                  <hr>
+                  <p class="fw-bold">Life style</p>
+<div class="container d-flex">
+    <p class="rounded-pill border border-3 px-2 py-1 me-2">
+        <i class="fa-solid fa-smoking me-2"></i>{{ user.additionalinfo.smoking_habits }}
+    </p>
+    <p class="rounded-pill border border-3 px-2 py-1 me-2">
+        <i class="fa-solid fa-wine-glass me-2"></i>{{ user.additionalinfo.drinking_habits }}
+    </p>
+</div>
+                  <div class="additional-images">
+                    {% if user.user_media %}
+                    {% with user.user_media.get_additional_images as images %}
+                    {% if images %}
+                    <div class="row">
+                    {% for image in images %}
+                    <div class="col-md-4">
+                      <img src="{{ image.url }}" class="img-fluid" alt="Additional Image">
+                    </div>
+                    {% endfor %}
+                  </div>
+                    {% else %}
+                    <p>No additional images available.</p>
+                    {% endif %}
+                    {% endwith %}
+                    {% else %}
+                    <p>User media not available.</p>
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <div
+            class=" container-fluid align-items-center text-center mt-3"
+          >
+          <a href="{% url 'like_profile' user.id %}" class=''>
+            <i class="bi bi-heart-fill px-2 py-1 rounded-circle fs-3" style="color: #f11e1e; border: 2px solid #f11e1e;"></i>
+        </a>
+            
+            <i class="bi bi-star-fill  px-2 py-1 rounded-circle fs-3" style="border: 2px solid rgb(13, 224, 94); color:rgb(13, 224, 94);"></i>
+            
+
+             <a href="{% url 'send_friend_request' user.id %}"> <i class="fas fa-user-friends text-info px-2 py-2 rounded-circle fs-3 " style="border: 2px solid rgb(88, 183, 255);"></i></a>
+
+              <a href="{% url 'hide_profile' user.id %}"> <i class="bi bi-x text-danger px-2 py-1 rounded-circle fs-3 " style="border: 2px solid red;"></i></a>
+
+          </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+
+        <h2 class="my-2 bg-dark text-light text-center p-2">Profiles with similar qualifications or designations</h2>
+        <div class="row">
+          {% for user in qualification_filtered_users %}
+          <div class="col-md-4">
+            <div class="card" data-bs-toggle="modal" data-bs-target="#userModal{{ user.id }}">
+              <div class="card-img" style="background-image: url('{% if user.personalinfo.profile_pic %}{{ user.personalinfo.profile_pic.url }}{% else %}https://via.placeholder.com/800x600{% endif %}');">
+                <div class="card-img-overlay">
+                  <div class="profile-details">
+                    <h5 class="card-title">{{ user.personalinfo.fullname }} {{ user.personalinfo.age }}</h5>
+                    <p>{{ user.personalinfo.qualification }} - {{ user.personalinfo.designation }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Modal -->
+          
+          {% empty %}
+          <div class="col-12">
+            <p>No profiles found with similar qualifications or designations.</p>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function toggleSidebar() {
+    const sidebar = document.getElementById("sidebar");
+    const mainContentWrapper = document.getElementById("main-content-wrapper");
+    sidebar.classList.toggle("collapsed");
+    mainContentWrapper.classList.toggle("full-width");
+  }
+
+  document.addEventListener("DOMContentLoaded", function() {
+    const clickableTexts = document.querySelectorAll(".clickable-text");
+
+    clickableTexts.forEach(text => {
+      text.addEventListener("click", function() {
+        clickableTexts.forEach(t => t.classList.remove("active"));
+        this.classList.add("active");
+      });
+    });
+  });
+
+function toggleContent(contentType) {
+  document.getElementById('matches_content').style.display = contentType === 'matches' ? 'block' : 'none';
+  document.getElementById('messages_content').style.display = contentType === 'messages' ? 'block' : 'none';
+  document.getElementById('text1').classList.toggle('active', contentType === 'matches');
+  document.getElementById('text2').classList.toggle('active', contentType === 'messages');
+}
+</script>
+{% endblock %}

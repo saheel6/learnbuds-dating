@@ -1,0 +1,256 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+  :root {
+    --primary-color: #FF6B6B;
+    --accent-color: #4ECDC4;
+    --text-color: #F7FFF7;
+  }
+
+  body {
+    font-family: 'Roboto', sans-serif;
+    color: var(--text-color);
+  }
+
+  .card {
+    background-color: #343a40;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: #343a40;
+  }
+
+  .btn-primary:hover {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+    color: #343a40;
+  }
+
+  .btn-outline-primary {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+  }
+
+  .btn-outline-primary:hover {
+    background-color: var(--primary-color);
+    color: #343a40;
+  }
+
+  .form-control, .form-control:focus {
+    background-color: #495057;
+    border-color: #6c757d;
+    color: var(--text-color);
+  }
+
+  .form-control:focus {
+    box-shadow: 0 0 0 0.2rem rgba(255, 107, 107, 0.25);
+  }
+
+  .dropzone {
+    border: 2px dashed var(--primary-color);
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    background-color: #495057;
+  }
+
+  .interest-tag {
+    background-color: var(--accent-color);
+    color: #343a40;
+    padding: 5px 10px;
+    border-radius: 20px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    display: inline-block;
+  }
+
+  .interest-tag .remove-tag {
+    margin-left: 5px;
+    cursor: pointer;
+  }
+
+  .form-floating>label {
+    color: #adb5bd;
+  }
+
+  /* New styles for gender selection */
+  .btn-group .btn-outline-primary {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+  }
+
+  .btn-group .btn-outline-primary:hover,
+  .btn-group .btn-check:checked + .btn-outline-primary {
+    background-color: var(--primary-color);
+    color: #343a40;
+  }
+</style>
+
+<div class="container-fluid bg-dark py-5">
+  <div class="container">
+    <h1 class="text-center mb-5" style="color: var(--primary-color);">Create Your Profile</h1>
+    <form id="profileForm" class="needs-validation" novalidate>
+      <div class="row">
+        <div class="col-md-6 mb-4">
+          <div class="card">
+            <div class="card-body">
+              <h3 class="card-title mb-4">Personal Information</h3>
+              
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="firstName" placeholder="First Name" required>
+                <label for="firstName">First Name</label>
+              </div>
+              
+              <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="email" placeholder="Email" required>
+                <label for="email">Email</label>
+              </div>
+              
+              <div class="form-floating mb-3">
+                <input type="date" class="form-control" id="birthday" required>
+                <label for="birthday">Birthday</label>
+              </div>
+              
+              <div class="mb-3">
+                <label class="form-label">Gender</label>
+                <div class="btn-group w-100" role="group" aria-label="Gender selection">
+                  <input type="radio" class="btn-check" name="gender" id="male" autocomplete="off" required>
+                  <label class="btn btn-outline-primary" for="male">Male</label>
+                  <input type="radio" class="btn-check" name="gender" id="female" autocomplete="off" required>
+                  <label class="btn btn-outline-primary" for="female">Female</label>
+                  <input type="radio" class="btn-check" name="gender" id="other" autocomplete="off" required>
+                  <label class="btn btn-outline-primary" for="other">Other</label>
+                </div>
+              </div>
+              
+              <div class="form-floating mb-3">
+                <textarea class="form-control" id="bio" style="height: 100px" placeholder="Bio"></textarea>
+                <label for="bio">Bio</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-6 mb-4">
+          <div class="card">
+            <div class="card-body">
+              <h3 class="card-title mb-4">Profile Pictures</h3>
+              
+              <div class="mb-4">
+                <label for="profilePic" class="form-label">Profile Picture</label>
+                <div class="dropzone rounded" id="profilePicUpload">
+                  <div class="dz-message">
+                    <i class="bi bi-cloud-arrow-up-fill fs-1"></i>
+                    <p>Drag and drop or click to upload</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div>
+                <label class="form-label">Additional Photos</label>
+                <div class="dropzone rounded" id="additionalPhotosUpload">
+                  <div class="dz-message">
+                    <i class="bi bi-images fs-1"></i>
+                    <p>Add up to 5 additional photos</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-12 mb-4">
+          <div class="card">
+            <div class="card-body">
+              <h3 class="card-title mb-4">Interests & Hobbies</h3>
+              <div class="mb-3">
+                <input type="text" class="form-control" id="interestInput" placeholder="Add your interests">
+              </div>
+              <div id="interestTags" class="d-flex flex-wrap gap-2">
+                <!-- Interest tags will be added here dynamically -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="text-center mt-4">
+        <button type="submit" class="btn btn-lg px-5" style="color: rgb(255, 255, 255);background-color: var(--primary-color);">Create Profile</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
+
+<script>
+  // Form validation
+  (function () {
+    'use strict'
+    var forms = document.querySelectorAll('.needs-validation')
+    Array.prototype.slice.call(forms)
+      .forEach(function (form) {
+        form.addEventListener('submit', function (event) {
+          if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+          }
+          form.classList.add('was-validated')
+        }, false)
+      })
+  })()
+
+  // Dropzone configuration
+  Dropzone.autoDiscover = false;
+
+  new Dropzone("#profilePicUpload", {
+    url: "/upload-profile-pic",
+    maxFiles: 1,
+    acceptedFiles: "image/*",
+    addRemoveLinks: true,
+    dictDefaultMessage: "Drop your profile picture here"
+  });
+
+  new Dropzone("#additionalPhotosUpload", {
+    url: "/upload-additional-photos",
+    maxFiles: 5,
+    acceptedFiles: "image/*",
+    addRemoveLinks: true,
+    dictDefaultMessage: "Drop up to 5 additional photos here"
+  });
+
+  // Interest tags
+  const interestInput = document.getElementById('interestInput');
+  const interestTags = document.getElementById('interestTags');
+
+  interestInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      addInterest(this.value);
+      this.value = '';
+    }
+  });
+
+  function addInterest(interest) {
+    if (interest.trim() !== '') {
+      const tag = document.createElement('span');
+      tag.classList.add('interest-tag');
+      tag.innerHTML = interest + '<span class="remove-tag">&times;</span>';
+      interestTags.appendChild(tag);
+
+      tag.querySelector('.remove-tag').addEventListener('click', function() {
+        tag.remove();
+      });
+    }
+  }
+</script>
+{% endblock content %}

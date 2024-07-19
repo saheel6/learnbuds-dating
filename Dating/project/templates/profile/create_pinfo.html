@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+    .form-group{
+        margin-bottom: 15px;
+    }
+</style>
+<div class="container vh-100 py-4">
+    <h1 class="text-center mb-2">Personal Info Form</h1>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label for="id_profile_pic" class="col-md-4 col-form-label">Profile Picture</label>
+          <div class="col-md-8">
+            {{ form.profile_pic }}
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="id_fullname" class="col-md-4 col-form-label">Full Name</label>
+          <div class="col-md-8">
+            {{ form.fullname }}
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="id_bio" class="col-md-4 col-form-label">Bio</label>
+          <div class="col-md-8">
+            {{ form.bio }}
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="id_bio" class="col-md-4 col-form-label">phone</label>
+          <div class="col-md-8">
+            {{ form.phone }}
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="id_DOB" class="col-md-4 col-form-label">Date of Birth</label>
+          <div class="col-md-8">
+            {{ form.DOB }}
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="id_gender" class="col-md-4 col-form-label">Gender</label>
+          <div class="col-md-8">
+            {{ form.gender }}
+          </div>
+        </div>
+        
+      </div>
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label for="id_status" class="col-md-4 col-form-label">Status</label>
+          <div class="col-md-8">
+            {{ form.status }}
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="id_designation" class="col-md-4 col-form-label">Designation</label>
+          <div class="col-md-8">
+            {{ form.designation }}
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="id_qualification" class="col-md-4 col-form-label">Qualification</label>
+          <div class="col-md-8">
+            {{ form.qualification }}
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="id_address" class="col-md-4 col-form-label">Address</label>
+          <div class="col-md-8">
+            {{ form.address }}
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="id_district" class="col-md-4 col-form-label">District</label>
+          <div class="col-md-8">
+            {{ form.district }}
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="id_state" class="col-md-4 col-form-label">State</label>
+          <div class="col-md-8">
+            {{ form.state }}
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="id_pincode" class="col-md-4 col-form-label">Pincode</label>
+          <div class="col-md-8">
+            {{ form.pincode }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary w-100">countinue</button>
+  </form>
+</div>
+{% endblock %}

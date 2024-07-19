@@ -1,0 +1,267 @@
+{% extends "base.html" %} {% load static %} {% block content %}
+<style>
+  .clickable-text.active {
+    border-bottom: 2px solid #f4443b;
+    color: #f4443b;
+  }
+  .content-area {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+  .gradient-box {
+    height: 170px;
+    width: 130px;
+    background-image: linear-gradient(180deg, #ba150c, #fb1206);
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+  .carousel-item {
+    position: relative; /* Add this line */
+  }
+  .carousel-item img {
+    height: 350px;
+    width: 280px;
+    display: block;
+    margin: auto;
+  }
+  .carousel-caption {
+    position: absolute; /* Change position to absolute */
+    bottom: 0; /* Align to the bottom */
+    align-items: center;
+    justify-content: center; /* Take full width of parent */
+    padding: 10px; /* Add some padding for better readability */
+     /* Semi-transparent background */
+    color: white; 
+  }
+  .carousel-indicators button {
+    border-radius: 50%;
+    width: 12px;
+    height: 12px;
+  }
+  .carousel-button {
+    border: 1px solid white;
+    color: white;
+    text-decoration: none;
+    display: inline-block;
+    padding: 5px 10px;
+    margin: 5px;
+    border-radius: 5px;
+  }
+  .carousel-button:hover {
+    background: linear-gradient(180deg, #ba150c, #fb1206);
+  }
+  .img_icons i {
+    border: 1px solid white;
+    margin: 0 5px;
+    padding: 10px;
+    border-radius: 50%;
+  }
+  .button-gap {
+    margin-top: 10px;
+  }
+  .equal-height {
+    display: flex;
+    align-items: stretch;
+  }
+  @media (max-width: 768px) {
+    .vh-100 {
+      height: auto !important; /* Override the fixed height */
+    }
+  }
+  .container-fluid.side1 {
+    padding: 0;
+    margin: 0; /* Remove padding */
+  }
+</style>
+
+<div class="container-fluid vh-100">
+  <div class="row">
+    <div class="col-md-4 vh-100 side1 pe-md-0 ps-md-0 bg-dark"> <!-- Apply pe-md-0 class to remove padding at the end of medium devices and above -->
+      <div class="container-fluid d-flex justify-content-center align-items-center text-center py-1 w-100"
+        style="background-image: linear-gradient(180deg, #ba150c, #fb1206)">
+        <img
+          src=""
+          alt="Profile Picture"
+          height="50px"
+          width="50px"
+          class="rounded-circle"
+        />
+        <p class="fw-bold text-light ms-3 pt-2 me-4">saheel</p>
+        <i
+          class="bi bi-grid ms-2 bg-dark text-light rounded-circle px-2 py-1"
+        ></i>
+        <i
+          class="bi bi-suitcase-lg-fill ms-2 bg-dark text-light rounded-circle px-2 py-1"
+        ></i>
+        <i
+          class="bi bi-shield-fill ms-2 bg-dark text-light rounded-circle px-2 py-1"
+        ></i>
+      </div>
+      <div class="container bg-dark">
+        <div class="text-light d-flex">
+          <p id="text1" class="clickable-text me-2 fs-5 fw-bold active">
+            Matches
+          </p>
+          <p id="text2" class="clickable-text fs-5 fw-bold">Messages</p>
+        </div>
+        <div>
+          <div id="content-area" class="content-area text-light bg-dark">
+            <div class="gradient-box"></div>
+            <p class="fs-4 fw-bold">Start Matching</p>
+            <div class="container text-center">
+              <p>
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eum
+                assumenda obcaecati fugit corrupti. Nostrum est quisquam ipsa.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8 bg-black vh-100 side2">
+      <div
+        id="imageCarousel"
+        class="carousel slide mt-5"
+        data-bs-ride="carousel"
+      >
+        <div class="carousel-indicators top-0">
+          <button
+            type="button"
+            data-bs-target="#imageCarousel"
+            data-bs-slide-to="0"
+            class="active"
+            aria-current="true"
+            aria-label="Slide 1"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#imageCarousel"
+            data-bs-slide-to="1"
+            aria-label="Slide 2"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#imageCarousel"
+            data-bs-slide-to="2"
+            aria-label="Slide 3"
+          ></button>
+        </div>
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img
+              src="{% static 'images/lad1.jpg' %}"
+              class="d-block"
+              alt="Image 1"
+            />
+            <div class="carousel-caption text-center bottom-0">
+              <p class="fs-4 fw-bold">
+                Ayushi 20 <br />
+                <span>calicut</span>
+              </p>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img
+              src="{% static 'images/lad2.jpg' %}"
+              class="d-block"
+              alt="Image 2"
+            />
+            <div class="carousel-caption text-center bottom-0">
+              <p class="fs-4 fw-bold">
+                Ayushi 20 <br />
+                <span>calicut</span>
+              </p>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img
+              src="{% static 'images/lad3.jpg' %}"
+              class="d-block"
+              alt="Image 3"
+            />
+            <div class="carousel-caption text-center bottom-0">
+              <p class="fs-4 fw-bold">
+                Ayushi 20 <br />
+                <span>calicut</span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div
+          class="c_bttons align-items-center justify-content-center text-center"
+        >
+          <a class="carousel-button px-2 rounded-pill mb-1">Travel</a>
+          <a class="carousel-button px-2 rounded-pill mb-1">HipHop</a>
+          <a class="carousel-button px-2 rounded-pill mb-1">Instagram</a>
+
+          <a class="carousel-button px-2 rounded-pill">Memes</a>
+          <a class="carousel-button px-2 rounded-pill">Motor-bike racing</a>
+        </div>
+
+        <div class="container mb-5">
+          <div
+            class="img_icons container-fluid align-items-center text-center mt-3"
+          >
+            <i
+              class="bi bi-x text-danger px-2 py-1 rounded-circle fs-3 " style="border: 2px solid red;"
+            ></i>
+            <i class="bi bi-star-fill text-info px-2 py-1 rounded-circle fs-3" style="border: 2px solid skyblue;"></i>
+            <i class="bi bi-heart-fill px-2 py-1 rounded-circle fs-3" style="color:#20c997; border: 2px solid #20c997;"></i>
+            <!-- <i class="bi bi-x px-2 py-1 rounded-circle fs-3" style="color:#6610f2; border: 2px solid #6610f2;"></i> -->
+          </div>
+        </div>
+        <button
+          class="carousel-control-prev"
+          type="button"
+          data-bs-target="#imageCarousel"
+          data-bs-slide="prev"
+        >
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button
+          class="carousel-control-next"
+          type="button"
+          data-bs-target="#imageCarousel"
+          data-bs-slide="next"
+        >
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const texts = document.querySelectorAll(".clickable-text");
+
+    texts.forEach((text) => {
+      text.addEventListener("click", function () {
+        texts.forEach((t) => t.classList.remove("active"));
+        this.classList.add("active");
+
+        const contentArea = document.getElementById("content-area");
+        if (this.id === "text1") {
+          contentArea.innerHTML = `
+            <div class="gradient-box"></div>
+            <p class="fs-4 fw-bold">Start Matching</p>
+            <div class="container text-center">
+              <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eum assumenda obcaecati fugit corrupti. Nostrum est quisquam ipsa.</p>
+            </div>
+          `;
+        } else if (this.id === "text2") {
+          contentArea.innerHTML = `
+            <h1> messages</h1>
+            <p>This is some detailed content for messages.</p>
+          `;
+        }
+      });
+    });
+  });
+</script>
+{% endblock content %}

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Sign Out{% endblock %}
+
+{% block content %}
+<div class="container-fluid vh-100 d-flex align-items-center justify-content-center text-center bg-dark" style="color: white;">
+<div class="container" >
+    <h1 class="mb-5 fw-bolder">Sign Out</h1>
+    <p class="fs-5 fw-bold mb-4"> <span class="text-danger">Are you sure you want to sign out, </span>{{ user.username }}?</p>
+    <form method="post" action="">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary">Yes, Sign Out</button>
+        <a href="{% url 'index' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+</div>
+{% endblock %}

@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    .p-images {
+        border: 2px dashed #fff;
+        border-radius: 15px;
+    }
+    .rounded-circle {
+        width: 150px;
+        height: 150px;
+        border: 3px solid #766e6d;
+    }
+    .list-group-item {
+        background-color: rgb(33, 33, 33);
+        color: #fff;
+    }
+    .edit-profile {
+        background: linear-gradient(180deg, #ba150c, #fb1206);
+        color: #fff;
+        font-weight: bold;
+    }
+</style>
+<div class="container-fluid bg-dark pb-5" style="color: #fff;">
+    <div class="container pt-3">
+        <div class="text-center">
+            
+            <img src="{{ profile.profile_pic.url }}" class="rounded-circle" alt="Profile Picture"><br>
+            <h5>{{ profile.fullname }}</h5>
+            <p>{{ profile.bio }}</p>
+            <!-- Button for editing profile -->
+            {% comment %} <a href="{% url 'edit_profile' %}" class="btn edit-profile">Edit Profile</a> {% endcomment %}
+        </div>
+        <div class="row mt-5">
+            <div class="col-md-6 bg-dark">
+                <div class="container p-3 "  style="border: 1px solid #fff;border-radius:5px;">
+                    <ul class="list-group">
+                        <li class="list-group-item"><strong>Full Name:</strong> {{ profile.fullname }}</li>
+                        <li class="list-group-item"><strong>Email:</strong> {{ profile.user.email }}</li>
+                        <li class="list-group-item"><strong>phone:</strong> {{ profile.phone }}</li>
+                        <li class="list-group-item"><strong>Birthday:</strong> {{ profile.DOB }}</li>
+                        <li class="list-group-item"><strong>Gender:</strong> {{ profile.gender }}</li>
+                        <li class="list-group-item"><strong>Status:</strong> {{ profile.status }}</li>
+                        <li class="list-group-item"><strong>Designation:</strong> {{ profile.designation }}</li>
+                        <li class="list-group-item"><strong>Qualification:</strong> {{ profile.qualification }}</li>
+                        <li class="list-group-item"><strong>Location:</strong> {{ profile.address }}, {{ profile.district }}, {{ profile.state }} - {{ profile.pincode }}</li>
+                        
+                        
+                    </ul>
+                    <div class="container justify-content-center align-items-center text-center mt-2 mb-3">
+                        <a href="{% url 'profile_update' profile.id %}">
+                            <button class="px-4 py-2 mt-3 fw-bold fs-5 rounded-pill border-0 text-light" style="background-image: linear-gradient(180deg, #f4443b, #fe817b);">edit</button>
+                        </a>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="col-md-6 p-3" style="border: 1px solid #fff;border-radius:5px;">
+                <div class="row">
+                    {% for image in user_media.get_additional_images %}
+                    <div class="col-4 mb-3">
+                        <img src="{{ image.url }}" class="img-fluid p-images" alt="Additional Image" style="width: 100%; height: 180px;">
+                    </div>
+                    {% endfor %}
+                    
+                    <div class="container justify-content-center align-items-center text-center">
+                        <a href="{% url 'update_media' user_media.pk %}">
+                            <button class="px-4 py-2 mt-3 fw-bold fs-5 rounded-pill border-0 text-light" style="background-image: linear-gradient(180deg, #f4443b, #fe817b);">update media</button>
+                        </a>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+        </div>
+        <div class="row align-items-center justify-content-center my-4">
+            <div class="col-md-6 bg-dark p-3"  style="border: 1px solid #fff;border-radius:5px;">
+                <ul class="list-group">
+                    
+                    <li class="list-group-item"><strong>Height:</strong> {{ additional_info.height }}</li>
+                    <li class="list-group-item"><strong>Weight:</strong> {{ additional_info.weight }}</li> 
+                    <li class="list-group-item"><strong>Interested In:</strong> {{ additional_info.intrested_in }}</li>
+                    <li class="list-group-item"><strong>Drinking Habits:</strong> {{ additional_info.drinking_habits }}</li>
+                    <li class="list-group-item"><strong>Smoking Habits:</strong> {{ additional_info.smoking_habits }}</li>
+                    <li class="list-group-item"><strong>Hobbies:</strong> {{ additional_info.get_hobbies_list|join:", " }}</li>
+                </ul>
+                <div class="container justify-content-center align-items-center text-center">
+                    <a href="{% url "update_ainfo" additional_info.id %}">
+                        <button class="px-4 py-2 mt-3 fw-bold fs-5 rounded-pill border-0 text-light" style="background-image: linear-gradient(180deg, #f4443b, #fe817b);">edit</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <h2>Liked Users</h2>
+
+{% if liked_users %}
+<ul>
+  {% for user in liked_users %}
+    <li class="text-light">{{ user.personalinfo.fullname }}</li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>No users liked yet.</p>
+{% endif %}
+
+{% if user.liked_by_profiles.all %}
+  <p>{{ user.liked_by_profiles.count }} users liked your profile:</p>
+  <ul>
+    {% for liker in user.liked_by_profiles.all %}
+      <li>{{ liker.personalinfo.fullname}}</li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>No one has liked your profile yet.</p>
+{% endif %}
+    </div>
+</div>
+{% endblock content %}

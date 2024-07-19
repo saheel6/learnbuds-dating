@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" integrity="sha384-4LISF5TTJX/fLmGSxO53rV4miRxdg84mZsxmO8Rx5jGtp/LbrixFETvWa5a6sESd" crossorigin="anonymous">
+</head>
+<style>
+    :root{
+        --offcanvas-width: 278px;
+        --topnavbar-height: 56px;
+    }
+    .navbar-nav li a {
+        color: white;
+    } 
+    .navbar-nav li a:hover {
+        color: red;
+    }
+    .dropdown-menu {
+        color: white;
+        background-color: black;
+    }
+    .offcanvas.sidebar-nav {
+        width: var(--offcanvas-width) !important;
+    }
+    @media (min-width: 992px) { 
+        body {
+            overflow: auto !important;
+        }
+        .offcanvas-backdrop::before {
+            display: none !important;
+        }
+        .offcanvas.sidebar-nav {
+            transform: none !important;
+            visibility: visible !important; 
+            top: var(--topnavbar-height);
+            height: calc(100% - var(--topnavbar-height));
+            position: fixed !important;
+        }
+    }
+    .navbar-toggler {
+        color: white;
+        border: 2px solid white;
+    }
+    .sidebar-nav .nav-link, .sidebar-nav .text-uppercase {
+        color: white !important;
+    }
+    .text-muted{
+        padding-top: 15px;
+    }
+</style>
+<body>
+  <!-- nav bar -->
+  <nav class="navbar navbar-expand-lg bg-dark" style="color: white;">
+    <div class="container-fluid">
+        <!-- offcanvas trigger -->
+        <button class="navbar-toggler me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <!-- offcanvas trigger -->
+      <a class="navbar-brand text-light me-auto" href="#">Navbar</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+         
+          
+        </ul>
+        <form class="d-flex" role="search">
+            <div class="input-group my-lg-0 my-3">
+                <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
+                <button class="btn btn-outline-secondary" type="button" id="button-addon2"><i class="bi text-light bi-search"></i></button>
+            </div>
+        </form>
+        <ul class="navbar-nav me-0 mb-2 mb-lg-0">
+          <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="bi bi-person-fill"></i>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li>
+              </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+   <!-- nav bar -->
+    <!-- off canvas -->
+    <div class="offcanvas offcanvas-start sidebar-nav bg-dark text-white" style="color: white;" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+        
+        <div class="offcanvas-body p-0">
+          <nav class="navbar-dark">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a href="#" class="nav-link px-3"><span class="me-2"><i class="bi bi-speedometer2"></i></span><span>Dashboard</span></a>
+                </li>
+                <li>
+                    <div class="text-muted small fw-bold text-uppercase px-3 mt-3"><p>User Management</p></div>
+                </li>
+                <li>
+                    <a href="#" class="nav-link px-3"><span class="me-2"><i class="bi bi-people"></i></span><span>View All Users</span></a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link px-3"><span class="me-2"><i class="bi bi-pencil-square"></i></span><span>Edit User Details</span></a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link px-3"><span class="me-2"><i class="bi bi-slash-circle"></i></span><span>Ban/Unban Users</span></a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link px-3"><span class="me-2"><i class="bi bi-file-earmark-text"></i></span><span>User Activity Logs</span></a>
+                </li>
+                <li>
+                    <div class="text-muted small fw-bold text-uppercase px-3 mt-3 text-light"><p>Content Management</p></div>
+                </li>
+                <li>
+                    <a href="#" class="nav-link px-3"><span class="me-2"><i class="bi bi-person-badge"></i></span><span>Manage Profile</span></a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link px-3"><span class="me-2"><i class="bi bi-flag"></i></span><span>Reported Content</span></a>
+                </li>
+                <li>
+                    <div class="text-muted small fw-bold text-uppercase px-3 mt-3"><p>Analytics and Insights</p></div>
+                </li>
+                <li>
+                    <a href="#" class="nav-link px-3"><span class="me-2"><i class="bi bi-bar-chart"></i></span><span>User Statistics</span></a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link px-3"><span class="me-2"><i class="bi bi-graph-up"></i></span><span>Engagement Metrics</span></a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link px-3"><span class="me-2"><i class="bi bi-graph-up-arrow"></i></span><span>Growth Metrics</span></a>
+                </li>
+                <li>
+                    <div class="text-muted small fw-bold text-uppercase px-3 mt-3"><p>Messaging</p></div>
+                </li>
+                <li>
+                    <a href="#" class="nav-link px-3"><span class="me-2"><i class="bi bi-chat-dots"></i></span><span>Manage Conversations</span></a>
+                </li>
+                <li>
+                    <div class="text-muted small fw-bold text-uppercase px-3 mt-3">Notifications and Announcements</div>
+                </li>
+                <li>
+                    <a href="#" class="nav-link px-3"><span class="me-2"><i class="bi bi-megaphone"></i></span><span>Broadcast Messages</span></a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link px-3"><span class="me-2"><i class="bi bi-chat-square-dots"></i></span><span>User Feedback</span></a>
+                </li>
+                <li>
+                    <div class="text-muted small fw-bold text-uppercase px-3 mt-3"><p>Administration and Roles</p></div>
+                </li>
+                <li>
+                    <a href="#" class="nav-link px-3"><span class="me-2"><i class="bi bi-shield-lock"></i></span><span>Admin Roles</span></a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link px-3"><span class="me-2"><i class="bi bi-file-earmark-lock"></i></span><span>Audit Logs</span></a>
+                </li>
+                <li>
+                    <div class="text-muted small fw-bold text-uppercase px-3 mt-3"><p>Administration and Roles</p></div>
+                </li>
+                <li>
+                    <a href="#" class="nav-link px-3"><span class="me-2"><i class="bi bi-cash-coin"></i></span><span>Premium Features</span></a>
+                </li>
+                <li>
+                    <div class="text-muted small fw-bold text-uppercase px-3 mt-3"><p>Settings and Configuration</p></div>
+                </li>
+                <li>
+                    <a href="#" class="nav-link px-3"><span class="me-2"><i class="bi bi-gear"></i></span><span>App Settings</span></a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link px-3"><span class="me-2"><i class="bi bi-toggle2-on"></i></span><span>Feature Toggles</span></a>
+                </li>
+                <li>
+                    <div class="text-muted small fw-bold text-uppercase px-3 mt-3"><p>Settings and Configuration</p>/div>
+                </li>
+                <li>
+                    <a href="#" class="nav-link px-3"><span class="me-2"><i class="bi bi-file-earmark-arrow-down"></i></span><span>Data Export</span></a>
+                </li>
+            </ul>
+          </nav>
+        </div>
+    </div>
+    <!-- off canvas -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

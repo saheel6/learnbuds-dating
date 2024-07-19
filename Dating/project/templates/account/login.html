@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load static %}
+{% load socialaccount %}
+{% block content %}
+<div class="container-fluid d-flex justify-content-center text-center bg-dark">
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <div class="row align-items-center justify-content-center text-center">
+        <div class="col-sm">
+            <div class="xl-4 border border-1 rounded py-5 px-3 m-5 bg-light">
+                <h3 class="mb-3">Dating App</h3>
+                <p class="fw-bolder fs-5">Login</p>
+                <form action="{% url 'signin' %}" method='POST'>
+                    {% csrf_token %}
+                    <input type="text" placeholder="email@domain.in" class="rounded w-100 border border-1 mb-2 py-2" name="username"><br>
+                    <input type="password" class="rounded w-100 border border-1 mb-2 py-2" placeholder="password" name="password">
+                    <button class="bg-dark w-100 py-2 text-light rounded" type="submit">Login</button>
+                </form>
+                <p>or continue with </p>
+                <div class="bg-secondary bg-gradient text-white bg-opacity-25 rounded justify-content-center">
+                    {% providers_media_js %}
+                    <a href="{% provider_login_url "google" method="oauth2" %}">
+                        <img src="{% static 'images/g1.png' %}" alt="Google" height="50px">
+                        <span class="fw-bold fs-4">Google</span>
+                    </a>
+                </div>
+                <p><a href="{% url 'signup' %}">don't have an account?</a></p>
+                <p><small class="text-secondary">By clicking continue you agree to our</small> <br><span>terms of services and privacy policy</span></p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

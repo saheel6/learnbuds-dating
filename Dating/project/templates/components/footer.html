@@ -1,0 +1,100 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Without Limits</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+</head>
+<style>
+    footer {
+        background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+        color: white;
+        font-family: 'Arial', sans-serif;
+    }
+    .footer-heading {
+        color: #ffffff;
+        font-weight: 600;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+    }
+    .footer-link {
+        color: #ffffff;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+    .footer-link:hover {
+        color: #ffecb3;
+    }
+    .social-icon {
+        font-size: 1.5rem;
+        margin: 0 10px;
+        transition: transform 0.3s ease;
+    }
+    .social-icon:hover {
+        transform: scale(1.2);
+    }
+    .newsletter-input {
+        border-radius: 20px 0 0 20px;
+        border: none;
+    }
+    .newsletter-button {
+        border-radius: 0 20px 20px 0;
+        border: none;
+        background-color: #ff4757;
+    }
+</style>
+<body>
+    <footer class="py-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <img src="{% static 'images/dlogo1.png' %}" alt="Love Without Limits Logo" height="70">
+                    <h4 class="mt-3 fw-bold fst-italic" style="color: #f10428;">Love Without Limits</h4>
+                    <p class="mt-3">Connecting hearts, one match at a time. Join our community and find your perfect match today!</p>
+                </div>
+                
+                <div class="col-lg-2 col-md-6">
+                    <h5 class="footer-heading">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="footer-link">Home</a></li>
+                        <li><a href="#" class="footer-link">Matches</a></li>
+                        <li><a href="#" class="footer-link">Messages</a></li>
+                        <li><a href="#" class="footer-link">Profile</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-2 col-md-6">
+                    <h5 class="footer-heading">Support</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="footer-link">FAQ</a></li>
+                        <li><a href="#" class="footer-link">Contact Us</a></li>
+                        <li><a href="#" class="footer-link">Privacy Policy</a></li>
+                        <li><a href="#" class="footer-link">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <h5 class="footer-heading">Stay Connected</h5>
+                    <p>Subscribe to our newsletter for dating tips and special offers!</p>
+                    <form class="d-flex mt-3">
+                        <input type="email" class="form-control newsletter-input" placeholder="Enter your email">
+                        <button type="submit" class="btn btn-primary newsletter-button">Subscribe</button>
+                    </form>
+                    <div class="mt-4">
+                        <a href="#" class="text-white social-icon"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="text-white social-icon"><i class="bi bi-twitter"></i></a>
+                        <a href="#" class="text-white social-icon"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="text-white social-icon"><i class="bi bi-tiktok"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-4">
+            <small>&copy; 2024 Love Without Limits. All rights reserved.</small>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
